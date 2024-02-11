@@ -1,10 +1,10 @@
-import { awscdk } from 'projen';
+import { awscdk } from "projen";
 const project = new awscdk.AwsCdkTypeScriptApp({
-  cdkVersion: '2.1.0',
-  defaultReleaseBranch: 'main',
-  name: 'cdk-app',
+  cdkVersion: "2.127.0",
+  defaultReleaseBranch: "main",
+  name: "cdk-app",
   projenrcTs: true,
-
+  prettier: true,
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */

@@ -26,7 +26,30 @@
     },
     "bundle": {
       "name": "bundle",
-      "description": "Prepare assets"
+      "description": "Prepare assets",
+      "steps": [
+        {
+          "spawn": "bundle:transcribe-connector/functions/transcribe-contentenricher.lambda"
+        }
+      ]
+    },
+    "bundle:transcribe-connector/functions/transcribe-contentenricher.lambda": {
+      "name": "bundle:transcribe-connector/functions/transcribe-contentenricher.lambda",
+      "description": "Create a JavaScript bundle from src/transcribe-connector/functions/transcribe-contentenricher.lambda.ts",
+      "steps": [
+        {
+          "exec": "esbuild --bundle src/transcribe-connector/functions/transcribe-contentenricher.lambda.ts --target=\"node18\" --platform=\"node\" --outfile=\"assets/transcribe-connector/functions/transcribe-contentenricher.lambda/index.js\" --tsconfig=\"tsconfig.dev.json\" --external:@aws-sdk/*"
+        }
+      ]
+    },
+    "bundle:transcribe-connector/functions/transcribe-contentenricher.lambda:watch": {
+      "name": "bundle:transcribe-connector/functions/transcribe-contentenricher.lambda:watch",
+      "description": "Continuously update the JavaScript bundle from src/transcribe-connector/functions/transcribe-contentenricher.lambda.ts",
+      "steps": [
+        {
+          "exec": "esbuild --bundle src/transcribe-connector/functions/transcribe-contentenricher.lambda.ts --target=\"node18\" --platform=\"node\" --outfile=\"assets/transcribe-connector/functions/transcribe-contentenricher.lambda/index.js\" --tsconfig=\"tsconfig.dev.json\" --external:@aws-sdk/* --watch"
+        }
+      ]
     },
     "clobber": {
       "name": "clobber",
@@ -211,13 +234,13 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/jest,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,jest,prettier,projen,ts-jest,ts-node,typescript"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/aws-lambda,@types/jest,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,jest,prettier,projen,ts-jest,ts-node,typescript,@aws-sdk/client-transcribe,@middy/core,@middy/input-output-logger,cdk-nag"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser aws-cdk esbuild eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest jest-junit prettier projen ts-jest ts-node typescript aws-cdk-lib constructs"
+          "exec": "yarn upgrade @types/aws-lambda @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser aws-cdk esbuild eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest jest-junit prettier projen ts-jest ts-node typescript @aws-sdk/client-transcribe @middy/core @middy/input-output-logger aws-cdk-lib cdk-nag constructs"
         },
         {
           "exec": "npx projen"

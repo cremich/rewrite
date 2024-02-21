@@ -53,6 +53,7 @@
         "devDependencies": [
           "**/test/**",
           "**/build-tools/**",
+          "src/transcribe-connector/functions/transcribe-contentenricher.lambda.ts",
           ".projenrc.ts",
           "projenrc/**/*.ts"
         ],

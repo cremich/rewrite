@@ -16,6 +16,7 @@
     ".projen/tasks.json",
     "cdk.json",
     "LICENSE",
+    "src/transcribe-connector/functions/transcribe-contentenricher-function.ts",
     "tsconfig.dev.json",
     "tsconfig.json"
   ],

@@ -15,7 +15,8 @@ export class MessagingStack extends Stack {
 
     this.messageBus = new MessageBus(this, "MessageBus", {
       name: props.messageBusName,
-    }).withMessageLogger();
+    });
+    this.messageBus.withMessageLogger();
 
     this.applyTagging();
   }

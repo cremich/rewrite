@@ -10,19 +10,30 @@ export interface TranscribeJobStateChanged {
 
 const transcribeClient = new Transcribe({});
 
+/**
+ * Handles a Transcribe job state change event from AWS EventBridge
+ * @param {EventBridgeEvent} event - The EventBridge event object
+ * @returns {EventBridgeEvent} - The enriched EventBridge event with the full transcription job details
+ */
 const lambdaHandler = async (
   event: EventBridgeEvent<"Transcribe Job State Change", TranscribeJobStateChanged>,
-): Promise<TranscriptionJob> => {
+): Promise<EventBridgeEvent<"Transcribe Job State Change", TranscriptionJob>> => {
   const transcriptionJob = await transcribeClient.getTranscriptionJob({
     TranscriptionJobName: event.detail.TranscriptionJobName,
   });
 
-  return { ...transcriptionJob.TranscriptionJob };
+  return {
+    ...event,
+    detail: { ...transcriptionJob.TranscriptionJob },
+  };
 };
 
+/**
+ * Middleware for logging input and output of the Lambda function
+ */
 export const handler = middy<
   EventBridgeEvent<"Transcribe Job State Change", TranscribeJobStateChanged>,
-  TranscriptionJob
+  EventBridgeEvent<"Transcribe Job State Change", TranscriptionJob>
 >()
   .use(inputOutputLogger())
   .handler(lambdaHandler);
